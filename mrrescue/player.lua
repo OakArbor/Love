@@ -1,18 +1,18 @@
 Player = { corners = {-6, 5, -22, -0.5} }
 Player.__index = Player
 
-local RUN_SPEED = 500 -- Run acceleration
-local MAX_SPEED = 160 -- Maximum running speed
-local MAX_SPEED_CARRY = 100 -- Maximum running speed when carrying human
-local BRAKE_SPEED = 250
-local GRAVITY = 350
-local JUMP_POWER = 135 -- initial yspeed when jumping
-local CLIMB_SPEED = 60 -- climbing speed
-local STREAM_SPEED = 400 -- stream growth speed
-local MAX_STREAM = 100 -- maximum stream length
+local RUN_SPEED = 800 -- Run acceleration
+local MAX_SPEED =  700 -- Maximum running speed
+local MAX_SPEED_CARRY = 20 -- Maximum running speed when carrying human
+local BRAKE_SPEED = 400
+local GRAVITY = 15
+local JUMP_POWER = 30 -- initial yspeed when jumping
+local CLIMB_SPEED = 15 -- climbing speed
+local STREAM_SPEED = 25 -- stream growth speed
+local MAX_STREAM = 200 -- maximum stream length
 local USE_RATE   = 2.5
-local BURN_DAMAGE = 0.5 -- Damage over time when touching enemies
-local TIME_DAMAGE = 0.008
+local BURN_DAMAGE = 0 -- Damage over time when touching enemies
+local TIME_DAMAGE = 0
 local FIRE_DIST = 1600
 
 PS_RUN, PS_CLIMB, PS_CARRY, PS_THROW, PS_DEAD = 0,1,2,3,4 -- Player states
@@ -39,8 +39,8 @@ function Player.create(x,y,level)
 	self.streamCollided = false
 	self.wquad = love.graphics.newQuad(0,0,10,10, 16,16) -- water stream quad
 
-	self.regen_rate = 3.0
-	self.water_capacity = 50
+	self.regen_rate = 99.0
+	self.water_capacity = 100
 	self.water = self.water_capacity
 	self.overloaded = false
 	self.hasReserve = false
@@ -53,7 +53,7 @@ function Player.create(x,y,level)
 	-- Temperature stats
 	self.temperature = 0 -- current temperature
 	if level == 1 then
-		self.max_temperature = 1.5 -- temperature player can withstand
+		self.max_temperature = 4000 -- temperature player can withstand
 	elseif level == 2 then
 		self.max_temperature = 1.2
 	else
@@ -149,7 +149,7 @@ function Player:update(dt)
 			map:addParticle(PopupText.create(v.id))
 			playSound("powerup")
 			v.alive = false
-			score = score + 500
+			score = score + 500000
 		end
 	end
 
